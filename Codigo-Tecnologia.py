@@ -7,15 +7,13 @@ from collections import Counter
 
 USUARIOS_FILE = "usuarios_simulados.csv"
 HISTORIAL_FILE = "historial_global.csv"
-API_KEY = "TU_API_KEY_OPENWEATHER"          # reemplazar con tu key real
+API_KEY = "a44339911076cc42ad240494a99f69f3"         
 GEMINI_API_KEY = "TU_API_KEY_GEMINI"        # reemplazar con tu key real
 
 usuario_actual = None
 
 
-# =========================
 # FUNCIONES AUXILIARES
-# =========================
 
 def inicializar_archivos():
     if not os.path.exists(USUARIOS_FILE):
@@ -37,9 +35,7 @@ def inicializar_archivos():
             ])
 
 
-# =========================
 # MENU ACCESO
-# =========================
 
 def menu_acceso():
     print("\n=== MENU ACCESO ===")
@@ -48,9 +44,7 @@ def menu_acceso():
     print("3. Salir")
 
 
-# =========================
 # VALIDAR PASSWORD
-# =========================
 
 def validar_password(password):
     errores = []
@@ -67,9 +61,7 @@ def validar_password(password):
     return errores
 
 
-# =========================
 # REGISTRAR USUARIO
-# =========================
 
 def registrar_usuario():
     global usuario_actual
@@ -101,9 +93,7 @@ def registrar_usuario():
     return True
 
 
-# =========================
 # INICIAR SESION
-# =========================
 
 def iniciar_sesion():
     global usuario_actual
@@ -123,9 +113,7 @@ def iniciar_sesion():
     return False
 
 
-# =========================
 # MENU PRINCIPAL
-# =========================
 
 def menu_principal():
     print("\n=== MENU PRINCIPAL ===")
@@ -137,9 +125,7 @@ def menu_principal():
     print("6. Cerrar sesion")
 
 
-# =========================
 # CONSULTAR CLIMA
-# =========================
 
 def consultar_clima():
     ciudad = input("Ingrese una ciudad: ")
@@ -183,12 +169,10 @@ def consultar_clima():
         print(f"Error al obtener datos del clima (codigo {respuesta.status_code})")
 
 
-# =========================
 # VER HISTORIAL
-# =========================
 
 def ver_historial():
-    # MEJORA: muestra todas las ciudades del usuario, no exige recordar una ciudad específica
+    # muestra todas las ciudades del usuario
     encontrado = False
 
     with open(HISTORIAL_FILE, "r", encoding="utf-8") as file:
@@ -211,10 +195,7 @@ def ver_historial():
     if not encontrado:
         print("No hay consultas registradas")
 
-
-# =========================
 # ESTADISTICAS
-# =========================
 
 def estadisticas():
     ciudades = []
@@ -225,7 +206,7 @@ def estadisticas():
         reader = csv.DictReader(file)
 
         for fila in reader:
-            # CORRECCIÓN: filtrar solo registros del usuario actual
+            # filtrar solo registros del usuario actual
             if fila["usuario"] == usuario_actual:
                 ciudades.append(fila["ciudad"])
                 temperaturas.append(float(fila["temperatura"]))
@@ -244,9 +225,7 @@ def estadisticas():
     print(f"Total consultas: {total}")
 
 
-# =========================
-# CONSEJO IA
-# =========================
+# CONSEJO CON IA
 
 def consejo_ia():
     try:
@@ -269,7 +248,8 @@ def consejo_ia():
 
         genai.configure(api_key=GEMINI_API_KEY)
 
-        # CORRECCIÓN: gemini-pro está deprecado; se usa gemini-1.5-flash
+        # gemini-pro está deprecado 
+        # se usa gemini-1.5-flash
         model = genai.GenerativeModel("gemini-1.5-flash")
 
         prompt = (
@@ -289,9 +269,7 @@ def consejo_ia():
         print(f"Error al generar consejo IA: {e}")
 
 
-# =========================
-# ACERCA DE
-# =========================
+# ACERCA DE PROGRAMACIÓN
 
 def acerca_de():
     print("=== ACERCA DE ===")
@@ -304,12 +282,10 @@ def acerca_de():
     print("de seguridad. El almacenamiento es simulado y")
     print("no seguro para aplicaciones reales.")
     print("Desarrolladores:")
-    print("- Agregar integrantes del grupo")
+    print("Granata Joaquin / Gazza Laureano / Echeverria Hilario / Banarek Manuel")
 
 
-# =========================
 # CERRAR SESION
-# =========================
 
 def cerrar_sesion():
     global usuario_actual
@@ -317,9 +293,7 @@ def cerrar_sesion():
     print("Sesion cerrada")
 
 
-# =========================
 # PROGRAMA PRINCIPAL
-# =========================
 
 def main():
     inicializar_archivos()
